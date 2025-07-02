@@ -1,0 +1,12 @@
+[build]
+  # base directory donde está tu CRA
+  base    = "qr-photo-app"
+  # carpeta que publica (relativa a base)
+  publish = "build"
+  # comando de build
+  command = "npm run build"
+
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
