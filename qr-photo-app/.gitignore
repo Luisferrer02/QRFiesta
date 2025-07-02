@@ -1,23 +1,46 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Dependencias de Node
 /node_modules
-/.pnp
-.pnp.js
+/Backend/node_modules
+/qr-photo-app/node_modules
 
-# testing
-/coverage
+# Salidas de build
+/qr-photo-app/build
+/dist
 
-# production
-/build
+# Variables de entorno (no versionar tus claves)
+/.env
+.env.*          # .env.local, .env.development, etc.
+/Backend/.env
+/qr-photo-app/.env
 
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Bases de datos temporales
+*.sqlite
+*.db
+
+# Sistemas operativos
+.DS_Store
+Thumbs.db
+
+# Editores y entornos
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Cobertura de tests
+coverage/
+*.lcov
+
+# Archivos temporales
+*.tmp
+*.temp
+*~
