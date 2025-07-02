@@ -1,6 +1,7 @@
 {
   "name": "qr-photo-app",
   "version": "0.1.0",
+  "proxy": "https://qrfiesta.onrender.com",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
