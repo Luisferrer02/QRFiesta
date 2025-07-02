@@ -1,30 +1,37 @@
-// src/pages/GalleryPage.jsx
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/GalleryPage.css';
 
 export default function GalleryPage() {
-  const [images, setImages] = useState([]);
+  // estado array de URLs
+  const [urls, setUrls] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/images').then((res) => setImages(res.data));
+    axios
+      .get('/api/images')
+      .then(({ data }) => {
+        console.log('Payload /api/images:', data);
+        // extraemos ipfsUrl de cada objeto Foto
+        const onlyUrls = data.map((foto) => foto.ipfsUrl);
+        setUrls(onlyUrls);
+      })
+      .catch((err) => {
+        console.error('Error cargando imágenes:', err);
+      });
   }, []);
 
   return (
-    <div className="gallery-container">
-      <h2>Galería del evento 🎉</h2>
-      {images.length === 0 ? (
-        <p>Aún no hay fotos subidas.</p>
-      ) : (
-        <div className="gallery-grid">
-          {images.map((url, i) => (
-            <div key={i} className="gallery-item">
-              <img src={url} alt={`foto-${i}`} />
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="p-4">
+      <h1 className="text-xl mb-4">Galería del evento 🎉</h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {urls.map((url, i) => (
+          <img
+            key={i}
+            src={url}
+            alt={`foto-${i}`}
+            className="rounded shadow object-cover w-full h-48"
+          />
+        ))}
+      </div>
     </div>
   );
 }
-
