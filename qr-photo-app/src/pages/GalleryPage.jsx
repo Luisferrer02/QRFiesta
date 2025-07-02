@@ -1,37 +1,49 @@
+// src/pages/GalleryPage.jsx
 import { useEffect, useState } from 'react';
 import API from '../api';
+import '../styles/GalleryPage.css';
 
 export default function GalleryPage() {
-  // estado array de URLs
   const [urls, setUrls] = useState([]);
+  const [modalSrc, setModalSrc] = useState(null);
 
   useEffect(() => {
-    API
-      .get('/api/images')
+    API.get('/api/images')
       .then(({ data }) => {
-        console.log('Payload /api/images:', data);
-        // extraemos ipfsUrl de cada objeto Foto
-        const onlyUrls = data.map((foto) => foto.ipfsUrl);
-        setUrls(onlyUrls);
+        // aseguramos que cada URL empiece por https://
+        const fixed = data.map(f => {
+          let u = f.ipfsUrl;
+          if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+          return u;
+        });
+        setUrls(fixed);
       })
-      .catch((err) => {
-        console.error('Error cargando imágenes:', err);
-      });
+      .catch(console.error);
   }, []);
 
   return (
     <div className="p-4">
       <h1 className="text-xl mb-4">Galería del evento 🎉</h1>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {urls.map((url, i) => (
-          <img
+      <ul className="gallery-grid">
+        {urls.map((src, i) => (
+          <li
             key={i}
-            src={url}
-            alt={`foto-${i}`}
-            className="rounded shadow object-cover w-full h-48"
-          />
+            className="photo-container"
+            onClick={() => setModalSrc(src)}
+          >
+            <img src={src} alt={`foto-${i}`} />
+          </li>
         ))}
-      </div>
+      </ul>
+
+      {modalSrc && (
+        <div
+          className="modal-overlay"
+          onClick={() => setModalSrc(null)}
+        >
+          <img src={modalSrc} alt="preview" />
+        </div>
+      )}
     </div>
   );
 }
