@@ -11,7 +11,18 @@ const Foto               = require('./models/Foto');
 const app    = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: function(origin, callback) {
+      // permitir solicitudes sin origen (p.ej. desde Postman)
+      if (!origin) return callback(null, true);
+      if (origins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error('CORS policy violation'), false);
+    }
+  })
+);
 app.use(express.json());
 
 console.log('Mongo URI:', process.env.MONGO_URI);

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import API from '../api';
 
 export default function GalleryPage() {
   // estado array de URLs
   const [urls, setUrls] = useState([]);
 
   useEffect(() => {
-    axios
+    API
       .get('/api/images')
       .then(({ data }) => {
         console.log('Payload /api/images:', data);

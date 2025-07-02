@@ -1,6 +1,6 @@
 // src/pages/UploadPage.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import API from '../api';
 import '../styles/UploadPage.css';
 
 export default function UploadPage() {
@@ -13,7 +13,7 @@ export default function UploadPage() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      await axios.post('/api/upload', formData);
+      await API.post('/api/upload', formData);
       setMsg('¡Foto subida con éxito!');
       setFile(null);
     } catch (err) {
