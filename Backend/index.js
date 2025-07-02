@@ -11,17 +11,21 @@ const Foto               = require('./models/Foto');
 const app    = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
+const origins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+    : [];
+
 app.use(
-  cors({
-    origin: function(origin, callback) {
-      // permitir solicitudes sin origen (p.ej. desde Postman)
-      if (!origin) return callback(null, true);
-      if (origins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error('CORS policy violation'), false);
-    }
-  })
+    cors({
+        origin: function(origin, callback) {
+            // permitir solicitudes sin origen (p.ej. desde Postman)
+            if (!origin) return callback(null, true);
+            if (origins.includes(origin)) {
+                return callback(null, true);
+            }
+            return callback(new Error('CORS policy violation'), false);
+        }
+    })
 );
 app.use(express.json());
 
