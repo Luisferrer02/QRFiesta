@@ -1,0 +1,17 @@
+### Obtener todas las fotos
+GET https://qrfiesta.onrender.com/api/images
+Accept: application/json
+
+###
+
+### Subir foto de prueba
+# Ajusta la ruta del fichero a un JPEG/PNG que tengas localmente
+POST http://localhost:4000/api/upload
+Content-Type: multipart/form-data; boundary=----boundary123
+
+------boundary123
+Content-Disposition: form-data; name="file"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./test.jpg
+------boundary123--
